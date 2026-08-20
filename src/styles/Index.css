@@ -3,17 +3,25 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-
+ 
 html, body, #root {
 	height: 100%;
+	background-color: #ffbf9b;
 }
-
+ 
 #main {
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	min-height: calc(100vh - 48px);
+	max-width: 1280px;
+	margin: 24px auto;
+	background-color: #ffffff;
+	border-radius: 28px;
+	overflow: hidden;
+	box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
 }
-
+ 
 #second-main {
 	flex: 1;
 }
+ 
