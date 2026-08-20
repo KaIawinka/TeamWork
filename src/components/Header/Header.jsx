@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import AuthModal from '../AuthModal/AuthModal'
-import { logout, selectIsAuthenticated, selectUserPhone } from '../../redux/Auth/AuthSlice'
+import { logout, selectIsAuthenticated } from '../../redux/Auth/authSlice'
 import './Header.css'
 
 function SearchIcon() {
@@ -95,9 +95,9 @@ function Header() {
 		debounceRef.current = setTimeout(async () => {
 			try {
 				const response = await axios.get('/api/pizzas', { params: { search: value } })
-				setResults(response.data)
-				setIsSearchOpen(true)
-			} catch (error) {
+				setResults(Array.isArray(response.data) ? response.data : [])
+				setIsSearchOpen(Array.isArray(response.data))
+			} catch {
 				setResults([])
 			}
 		}, 300)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Categories from '../components/Home/Categories'
 import Sort from '../components/Home/Sort'
@@ -13,6 +13,7 @@ function Home() {
 	const [products, setProducts] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 	const [error, setError] = useState(false)
+	const shouldShowSkeletons = isLoading || error || products.length === 0
 
 	useEffect(() => {
 		let isCancelled = false
@@ -35,9 +36,14 @@ function Home() {
 				})
 
 				if (!isCancelled) {
-					setProducts(response.data)
+					if (Array.isArray(response.data)) {
+						setProducts(response.data)
+					} else {
+						setError(true)
+						setProducts([])
+					}
 				}
-			} catch (requestError) {
+			} catch {
 				if (!isCancelled) {
 					setError(true)
 					setProducts([])
@@ -69,19 +75,13 @@ function Home() {
 				<Filter onApply={setFilters} />
 
 				<div className="home__products">
-					{isLoading &&
+					{shouldShowSkeletons &&
 						Array.from({ length: 6 }).map((item, index) => <ProductCardSkeleton key={index} />)}
 
-					{!isLoading && error && (
-						<p className="home__message">Не удалось загрузить пиццы. Попробуйте обновить страницу</p>
-					)}
-
-					{!isLoading && !error && products.length === 0 && (
-						<p className="home__message">Ничего не найдено по заданным условиям</p>
-					)}
 
 					{!isLoading &&
 						!error &&
+						products.length > 0 &&
 						products.map((product) => (
 							<ProductCard
 								key={product.id}

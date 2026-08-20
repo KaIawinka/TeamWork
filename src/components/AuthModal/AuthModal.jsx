@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { setAuthenticated } from '../../redux/Auth/AuthSlice'
+import { setAuthenticated } from '../../redux/Auth/authSlice'
 import './AuthModal.css'
 
 function CloseIcon() {
@@ -91,7 +91,7 @@ function AuthModal({ onClose }) {
 			const response = await axios.post('/api/auth/verify', { phone, code: value })
 			dispatch(setAuthenticated({ phone, user: response.data }))
 			onClose()
-		} catch (error) {
+		} catch {
 			setCode(['', '', '', ''])
 			codeRefs.current[0]?.focus()
 		} finally {

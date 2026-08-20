@@ -1,15 +1,16 @@
 .product-card {
 	display: flex;
 	flex-direction: column;
+	min-height: 350px;
 }
 
 .product-card__image {
-	width: 180px;
-	height: 180px;
+	width: 198px;
+	height: 198px;
 	border-radius: 50%;
 	object-fit: cover;
 	align-self: center;
-	margin-bottom: 20px;
+	margin-bottom: 35px;
 }
 
 .product-card__name {
@@ -56,25 +57,27 @@
 }
 
 .product-card__skeleton {
-	background: linear-gradient(90deg, #f4f4f4 25%, #ececec 37%, #f4f4f4 63%);
+	background: #f4f4f4;
 	background-size: 400% 100%;
 	border-radius: 6px;
-	animation: skeleton-shimmer 1.4s ease infinite;
+	animation: none;
 }
 
 .product-card__skeleton--circle {
-	background-color: #f4f4f4;
+	background-color: #f1f1f1;
 	background-image: none;
-	animation: skeleton-pulse 1.4s ease infinite;
+	animation: none;
 }
 
 .product-card__skeleton--line {
-	height: 12px;
+	height: 9px;
+	margin-bottom: 8px;
 }
 
 .product-card__skeleton--pill {
-	height: 34px;
-	border-radius: 10px;
+	height: 29px;
+	border-radius: 9px;
+	margin-top: 18px;
 }
 
 @keyframes skeleton-shimmer {

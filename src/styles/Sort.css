@@ -1,13 +1,18 @@
 .sort {
 	position: relative;
+	flex-shrink: 0;
 }
 
 .sort__toggle {
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	background-color: transparent;
-	font-size: 14px;
+	height: 50px;
+	padding: 0 22px;
+	border-radius: 13px;
+	background-color: #fafafa;
+	font-size: 13px;
+	font-weight: 700;
 	color: #1a1a1a;
 	cursor: pointer;
 	white-space: nowrap;
@@ -15,7 +20,7 @@
 
 .sort__value {
 	color: #fe5f00;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .sort__dropdown {

@@ -1,21 +1,26 @@
 .categories {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 0;
 	list-style: none;
+	min-height: 50px;
+	padding: 0 8px;
+	border-radius: 13px;
+	background-color: #fafafa;
 }
 
 .categories__item {
 	display: flex;
 	align-items: center;
 	gap: 6px;
-	height: 38px;
-	padding: 0 16px;
+	height: 40px;
+	padding: 0 19px;
 	border-radius: 12px;
 	border: 1.5px solid transparent;
 	background-color: transparent;
-	font-size: 14px;
-	color: #808080;
+	font-size: 12px;
+	font-weight: 700;
+	color: #1a1a1a;
 	cursor: pointer;
 	white-space: nowrap;
 }
@@ -25,9 +30,11 @@
 }
 
 .categories__item--active {
-	border-color: #1a1a1a;
+	border-color: transparent;
+	background-color: #ffffff;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 	color: #1a1a1a;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .categories__more {

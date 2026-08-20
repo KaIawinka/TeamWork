@@ -7,21 +7,32 @@
 html, body, #root {
 	height: 100%;
 	background-color: #ffbf9b;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	padding: 34px 0;
 }
  
 #main {
 	display: flex;
 	flex-direction: column;
-	min-height: calc(100vh - 48px);
-	max-width: 1280px;
-	margin: 24px auto;
+	min-height: calc(100vh - 68px);
+	max-width: 1330px;
+	margin: 0 auto;
 	background-color: #ffffff;
+	border: 0;
 	border-radius: 28px;
 	overflow: hidden;
-	box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+	box-shadow: none;
 }
  
 #second-main {
 	flex: 1;
+}
+
+button {
+	border: 0;
+	font-family: inherit;
 }
  

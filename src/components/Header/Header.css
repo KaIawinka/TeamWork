@@ -1,15 +1,15 @@
 .header {
 	background-color: #ffffff;
-	border-bottom: 1px solid #f0f0f0;
+	border-bottom: 1px solid #ececec;
 }
 
 .header__inner {
-	max-width: 1280px;
+	max-width: 1190px;
 	margin: 0 auto;
-	padding: 18px 40px;
+	padding: 40px 24px 37px;
 	display: flex;
 	align-items: center;
-	gap: 40px;
+	gap: 34px;
 }
 
 .header__logo {
@@ -21,7 +21,7 @@
 }
 
 .header__logo-icon {
-	font-size: 30px;
+	font-size: 25px;
 	line-height: 1;
 }
 
@@ -33,19 +33,19 @@
 .header__logo-title {
 	font-size: 20px;
 	font-weight: 800;
-	letter-spacing: 0.5px;
+	letter-spacing: 0;
 	color: #1a1a1a;
 }
 
 .header__logo-subtitle {
-	font-size: 11px;
+	font-size: 12px;
 	color: #b0b0b0;
 }
 
 .header__search {
 	position: relative;
 	flex: 1;
-	max-width: 640px;
+	max-width: 700px;
 }
 
 .header__search-icon {
@@ -59,12 +59,12 @@
 
 .header__search-input {
 	width: 100%;
-	height: 48px;
+	height: 44px;
 	border: none;
-	border-radius: 12px;
-	background-color: #f9f9f9;
+	border-radius: 14px;
+	background-color: #fafafa;
 	padding: 0 16px 0 46px;
-	font-size: 15px;
+	font-size: 14px;
 	color: #1a1a1a;
 	outline: none;
 	transition: box-shadow 0.2s ease;
@@ -128,7 +128,7 @@
 .header__actions {
 	display: flex;
 	align-items: center;
-	gap: 16px;
+	gap: 12px;
 	flex-shrink: 0;
 }
 
@@ -136,10 +136,10 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	height: 48px;
-	padding: 0 20px;
-	border-radius: 12px;
-	font-size: 15px;
+	height: 43px;
+	padding: 0 18px;
+	border-radius: 13px;
+	font-size: 14px;
 	font-weight: 600;
 	cursor: pointer;
 	white-space: nowrap;
@@ -147,7 +147,7 @@
 
 .header__btn--outline {
 	background-color: #ffffff;
-	border: 1.5px solid #fe5f00;
+	border: 1px solid #fe5f00;
 	color: #fe5f00;
 }
 
@@ -189,19 +189,36 @@
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	height: 48px;
-	padding: 0 20px;
-	border-radius: 12px;
-	border: 1.5px solid #ececec;
-	color: #1a1a1a;
+	width: 43px;
+	height: 43px;
+	justify-content: center;
+	padding: 0;
+	border-radius: 13px;
+	border: 1px solid #fe5f00;
+	color: #fe5f00;
 	text-decoration: none;
 }
 
 .header__cart--filled {
+	width: auto;
+	padding: 0 18px;
 	background-color: #fe5f00;
 	border-color: #fe5f00;
 	color: #ffffff;
 	font-weight: 700;
+}
+
+@media (max-width: 760px) {
+	.header__inner {
+		flex-wrap: wrap;
+		padding: 28px 18px;
+	}
+
+	.header__search {
+		order: 3;
+		max-width: none;
+		flex-basis: 100%;
+	}
 }
 
 .header__cart-price {
