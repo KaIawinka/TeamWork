@@ -1,0 +1,105 @@
+.filter {
+	width: 260px;
+	flex-shrink: 0;
+}
+
+.filter__title {
+	font-size: 18px;
+	font-weight: 800;
+	color: #1a1a1a;
+	margin-bottom: 16px;
+}
+
+.filter__checkbox {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	color: #1a1a1a;
+	cursor: pointer;
+	margin-bottom: 12px;
+}
+
+.filter__checkbox input {
+	display: none;
+}
+
+.filter__checkbox-box {
+	width: 20px;
+	height: 20px;
+	border-radius: 6px;
+	border: 1.5px solid #dcdcdc;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.filter__checkbox input:checked + .filter__checkbox-box {
+	background-color: #fe5f00;
+	border-color: #fe5f00;
+}
+
+.filter__section {
+	margin-top: 24px;
+	padding-top: 20px;
+	border-top: 1px solid #f0f0f0;
+}
+
+.filter__subtitle {
+	font-size: 15px;
+	font-weight: 700;
+	color: #1a1a1a;
+	margin-bottom: 14px;
+}
+
+.filter__price {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.filter__price-input {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	height: 44px;
+	padding: 0 12px;
+	border-radius: 10px;
+	border: 1.5px solid #ececec;
+	flex: 1;
+	color: #b0b0b0;
+}
+
+.filter__price-input input {
+	width: 100%;
+	border: none;
+	outline: none;
+	font-size: 14px;
+	color: #1a1a1a;
+}
+
+.filter__show-all {
+	background-color: transparent;
+	color: #fe5f00;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	margin-top: 4px;
+}
+
+.filter__apply {
+	width: 100%;
+	height: 48px;
+	border-radius: 12px;
+	background-color: #fe5f00;
+	color: #ffffff;
+	font-size: 15px;
+	font-weight: 700;
+	cursor: pointer;
+	margin-top: 28px;
+}
+
+.filter__apply:hover {
+	background-color: #e35400;
+}

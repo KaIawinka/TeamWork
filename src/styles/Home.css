@@ -1,0 +1,47 @@
+.home {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 32px 40px 60px;
+}
+
+.home__title {
+	font-size: 28px;
+	font-weight: 800;
+	color: #1a1a1a;
+	margin-bottom: 24px;
+}
+
+.home__controls {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #f0f0f0;
+	margin-bottom: 32px;
+}
+
+.home__body {
+	display: flex;
+	gap: 40px;
+}
+
+.home__products {
+	flex: 1;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 32px 24px;
+}
+
+.home__message {
+	grid-column: 1 / -1;
+	text-align: center;
+	color: #9a9a9a;
+	font-size: 15px;
+	padding: 60px 0;
+}
+
+@media (max-width: 960px) {
+	.home__products {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
