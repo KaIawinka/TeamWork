@@ -38,8 +38,8 @@ function matchesFilters(pizza, options) {
 		(!categoryField || pizza[categoryField]) &&
 		(!options.canAssemble || pizza.canCustomise) &&
 		(!options.isNew || pizza.isNew) &&
-		(options.priceFrom === undefined || pizza.price >= options.priceFrom) &&
-		(options.priceTo === undefined || pizza.price <= options.priceTo) &&
+		(options.priceFrom === undefined || Number.isNaN(options.priceFrom) || pizza.price >= options.priceFrom) &&
+		(options.priceTo === undefined || Number.isNaN(options.priceTo) || pizza.price <= options.priceTo) &&
 		ingredients.every((id) => pizza[INGREDIENT_FIELDS[id]])
 	)
 }

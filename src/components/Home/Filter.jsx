@@ -12,9 +12,6 @@ const INGREDIENTS = [
 	{ id: 4, name: 'Солёные огурчики' },
 	{ id: 5, name: 'Красный лук' },
 	{ id: 6, name: 'Томаты' },
-	{ id: 7, name: 'Грибы' },
-	{ id: 8, name: 'Ветчина' },
-	{ id: 9, name: 'Ананасы' },
 ]
 
 const VISIBLE_COUNT = 6
@@ -22,8 +19,8 @@ const VISIBLE_COUNT = 6
 function Filter({ onApply }) {
 	const [canAssemble, setCanAssemble] = useState(false)
 	const [isNew, setIsNew] = useState(false)
-	const [priceFrom, setPriceFrom] = useState('0')
-	const [priceTo, setPriceTo] = useState('1950')
+	const [priceFrom, setPriceFrom] = useState('')
+	const [priceTo, setPriceTo] = useState('')
 	const [selectedIngredients, setSelectedIngredients] = useState([])
 	const [showAllIngredients, setShowAllIngredients] = useState(false)
 
@@ -39,8 +36,8 @@ function Filter({ onApply }) {
 		onApply({
 			canAssemble,
 			isNew,
-			priceFrom: Number(priceFrom) || 0,
-			priceTo: Number(priceTo) || 0,
+			priceFrom: priceFrom === '' ? undefined : Number(priceFrom),
+			priceTo: priceTo === '' ? undefined : Number(priceTo),
 			ingredients: selectedIngredients,
 		})
 	}
