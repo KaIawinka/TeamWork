@@ -5,13 +5,18 @@ function ProductSkeletons() {
 	return Array.from({ length: 6 }).map((item, index) => <ProductCardSkeleton key={index} />)
 }
 
-function ProductList({ products, isLoading, error }) {
+function ProductList({ products, isLoading, error, onOpen, hasActiveFilters }) {
 	const shouldShowSkeletons = isLoading
 
 	return (
 		<div className="home__products">
 			{shouldShowSkeletons && <ProductSkeletons />}
-			{!isLoading && !error && products.length === 0 && <p className="home__message">Товар не найден</p>}
+			{!isLoading && error && <p className="home__message">Не удалось загрузить товары</p>}
+			{!isLoading && !error && products.length === 0 && (
+				<p className="home__message">
+					{hasActiveFilters ? 'Товар не найден' : 'Каталог пока пуст. Добавьте товары через панель управления.'}
+				</p>
+			)}
 
 			{!isLoading &&
 				!error &&
@@ -19,10 +24,8 @@ function ProductList({ products, isLoading, error }) {
 				products.map((product) => (
 					<ProductCard
 						key={product.id}
-						name={product.name}
-						description={product.description}
-						price={product.price}
-						imageUrl={product.imageUrl}
+						product={product}
+						onOpen={onOpen}
 					/>
 				))}
 		</div>

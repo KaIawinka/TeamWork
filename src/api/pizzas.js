@@ -45,8 +45,16 @@ function matchesFilters(pizza, options) {
 }
 
 export async function getPizzas(options = {}) {
-	const response = await api.get('/api/v1/pizzas')
-	const pizzas = Array.isArray(response.data) ? response.data.map(normalizePizza) : []
+	let apiPizzas = []
+
+	try {
+		const response = await api.get('/api/v1/pizzas')
+		apiPizzas = Array.isArray(response.data) ? response.data.map(normalizePizza) : []
+	} catch (error) {
+		console.warn('Не удалось загрузить товары из API', error)
+	}
+
+	const pizzas = apiPizzas
 	const query = options.search?.trim().toLowerCase()
 
 	return pizzas

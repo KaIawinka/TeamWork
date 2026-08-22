@@ -1,0 +1,17 @@
+.product-modal { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
+.product-modal__overlay { position: absolute; inset: 0; border: 0; background: rgba(20, 20, 20, .58); cursor: default; }
+.product-modal__window { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; width: min(760px, calc(100% - 32px)); overflow: hidden; border-radius: 18px; background: #fff; box-shadow: 0 20px 70px rgba(0, 0, 0, .22); }
+.product-modal__visual { display: flex; align-items: center; justify-content: center; min-height: 390px; padding: 28px; background: #fff8f2; }
+.product-modal__visual img { width: 100%; max-width: 310px; aspect-ratio: 1; object-fit: contain; }
+.product-modal__details { padding: 42px 32px 30px; }
+.product-modal__close { position: absolute; top: 12px; right: 16px; z-index: 2; border: 0; background: transparent; color: #8f8f8f; font-size: 30px; line-height: 1; cursor: pointer; }
+.product-modal__details h2 { margin-bottom: 7px; font-size: 24px; }
+.product-modal__meta, .product-modal__description { color: #aaa; font-size: 12px; line-height: 1.5; }
+.product-modal__description { margin: 18px 0 24px; }
+.product-modal__section { margin-bottom: 18px; }
+.product-modal__section > span { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 700; }
+.product-modal__options { display: flex; gap: 5px; padding: 3px; border-radius: 12px; background: #f3f3f3; }
+.product-modal__options button { flex: 1; min-height: 30px; border: 0; border-radius: 9px; background: transparent; color: #777; font-size: 10px; cursor: pointer; }
+.product-modal__options button.is-active { background: #fff; color: #222; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
+.product-modal__add { width: 100%; height: 44px; margin-top: 12px; border: 0; border-radius: 11px; background: #fe5f00; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+@media (max-width: 620px) { .product-modal__window { grid-template-columns: 1fr; max-height: calc(100vh - 32px); overflow-y: auto; } .product-modal__visual { min-height: 230px; } .product-modal__details { padding: 24px; } }

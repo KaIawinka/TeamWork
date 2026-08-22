@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
+import api from '../../api/client'
 import { setAuthenticated } from '../../redux/Auth/authSlice'
 import AuthModalCloseButton from './AuthModalCloseButton'
 import CodeStep from './CodeStep'
@@ -41,7 +41,7 @@ function AuthModal({ onClose }) {
 	async function requestCode() {
 		setIsLoading(true)
 		try {
-			await axios.post('/api/auth/send-code', { phone })
+			await api.post('/api/auth/send-code', { phone })
 			setStep('code')
 			setTimer(30)
 		} finally {
@@ -83,7 +83,7 @@ function AuthModal({ onClose }) {
 	async function verifyCode(value) {
 		setIsLoading(true)
 		try {
-			const response = await axios.post('/api/auth/verify', { phone, code: value })
+			const response = await api.post('/api/auth/verify', { phone, code: value })
 			dispatch(setAuthenticated({ phone, user: response.data }))
 			onClose()
 		} catch {

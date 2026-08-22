@@ -4,6 +4,8 @@ import Categories from '../components/Home/Categories'
 import Sort from '../components/Home/Sort'
 import Filter from '../components/Home/Filter'
 import ProductList from '../components/Home/ProductList'
+import Pagination from '../components/Home/Pagination'
+import ProductModal from '../components/Home/ProductModal'
 import { getPizzas } from '../api/pizzas'
 import '../styles/Home.css'
 
@@ -16,10 +18,12 @@ function Home() {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [isLoading, setIsLoading] = useState(true)
 	const [error, setError] = useState(false)
+	const [selectedProduct, setSelectedProduct] = useState(null)
 	const productsPerPage = 6
 	const pageCount = Math.ceil(products.length / productsPerPage)
 	const safeCurrentPage = pageCount > 0 ? Math.min(currentPage, pageCount) : 1
 	const visibleProducts = products.slice((safeCurrentPage - 1) * productsPerPage, safeCurrentPage * productsPerPage)
+	const hasActiveFilters = Boolean(searchQuery?.trim()) || category !== 'Все' || Boolean(filters?.canAssemble || filters?.isNew || filters?.priceFrom !== undefined || filters?.priceTo !== undefined || filters?.ingredients?.length)
 
 	useEffect(() => {
 		let isCancelled = false
@@ -84,39 +88,13 @@ function Home() {
 
 			<div className="home__body">
 				<Filter onApply={handleFilterApply} />
-				<ProductList products={visibleProducts} isLoading={isLoading} error={error} />
+				<ProductList products={visibleProducts} isLoading={isLoading} error={error} onOpen={setSelectedProduct} hasActiveFilters={hasActiveFilters} />
 			</div>
 
 			{!isLoading && !error && pageCount > 1 && (
-				<nav className="pagination" aria-label="Страницы каталога">
-					<button
-						type="button"
-						className="pagination__button"
-						disabled={safeCurrentPage === 1}
-						onClick={() => setCurrentPage((page) => page - 1)}
-					>
-						‹
-					</button>
-					{Array.from({ length: pageCount }, (_, index) => index + 1).map((page) => (
-						<button
-							type="button"
-							className={`pagination__button ${page === safeCurrentPage ? 'pagination__button--active' : ''}`}
-							key={page}
-							onClick={() => setCurrentPage(page)}
-						>
-							{page}
-						</button>
-					))}
-					<button
-						type="button"
-						className="pagination__button"
-						disabled={safeCurrentPage === pageCount}
-						onClick={() => setCurrentPage((page) => page + 1)}
-					>
-						›
-					</button>
-				</nav>
+				<Pagination currentPage={safeCurrentPage} pageCount={pageCount} onChange={setCurrentPage} />
 			)}
+			{selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
 		</div>
 	)
 }

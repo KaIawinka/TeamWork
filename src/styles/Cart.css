@@ -1,0 +1,11 @@
+.cart-page { max-width: 1140px; margin: 0 auto; padding: 42px 24px 80px; }
+.cart-page__heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+.cart-page__heading h1 { font-size: 30px; }
+.cart-page__heading a { color: #fe5f00; font-size: 12px; text-decoration: none; }
+.cart-page__layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start; }
+.cart-page__items, .cart-summary, .cart-page__empty { padding: 24px; border-radius: 16px; background: #fff; box-shadow: 0 8px 30px rgba(0,0,0,.05); }
+.cart-item { display: grid; grid-template-columns: 76px 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f1f1; }
+.cart-item img { width: 76px; height: 76px; border-radius: 12px; object-fit: contain; background: #fff7f1; }
+.cart-item h2 { margin-bottom: 5px; font-size: 15px; }.cart-item p { margin-bottom: 9px; color: #aaa; font-size: 11px; }.cart-item strong { font-size: 13px; }.cart-item button { width: 30px; height: 30px; border: 1px solid #fe5f00; border-radius: 8px; background: #fff; color: #fe5f00; cursor: pointer; }
+.cart-summary h2 { margin-bottom: 22px; font-size: 18px; }.cart-summary div { display: flex; justify-content: space-between; margin: 14px 0; color: #888; font-size: 12px; }.cart-summary strong { color: #222; }.cart-summary hr { border: 0; border-top: 1px solid #eee; }.cart-summary .cart-summary__total { color: #222; font-size: 16px; }.cart-page__button { display: inline-block; padding: 13px 20px; border: 0; border-radius: 10px; background: #fe5f00; color: #fff; font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer; }.cart-summary .cart-page__button { width: 100%; text-align: center; }.cart-page__empty { text-align: center; padding: 70px 24px; }.cart-page__empty h2 { margin-bottom: 10px; }.cart-page__empty p { margin-bottom: 24px; color: #aaa; font-size: 13px; }.cart-page__clear { margin-top: 20px; border: 0; background: transparent; color: #fe5f00; font-size: 12px; cursor: pointer; }
+@media (max-width: 700px) { .cart-page__layout { grid-template-columns: 1fr; } }

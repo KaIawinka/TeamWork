@@ -3,22 +3,28 @@
 	align-items: center;
 	gap: 0;
 	list-style: none;
-	min-height: 50px;
+	min-height: 44px;
 	padding: 0 8px;
 	border-radius: 13px;
 	background-color: #fafafa;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+	display: none;
 }
 
 .categories__item {
 	display: flex;
 	align-items: center;
 	gap: 6px;
-	height: 40px;
-	padding: 0 19px;
+	height: 36px;
+	padding: 0 16px;
 	border-radius: 12px;
 	border: 1.5px solid transparent;
 	background-color: transparent;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: 700;
 	color: #1a1a1a;
 	cursor: pointer;

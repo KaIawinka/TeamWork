@@ -1,13 +1,14 @@
 import { useSelector } from 'react-redux'
 import { selectIsAuthenticated } from '../../redux/Auth/authSlice'
+import { selectCartCount, selectCartTotal } from '../../redux/Cart/cartSlice'
 import CartButton from './CartButton'
 import LoginButton from './LoginButton'
 import ProfileMenu from './ProfileMenu'
 
 function HeaderActions({ onLoginClick }) {
 	const isAuthenticated = useSelector(selectIsAuthenticated)
-	const totalPrice = useSelector((state) => state.cart?.totalPrice ?? 0)
-	const totalCount = useSelector((state) => state.cart?.totalCount ?? 0)
+	const totalPrice = useSelector(selectCartTotal)
+	const totalCount = useSelector(selectCartCount)
 
 	return (
 		<div className="header__actions">
