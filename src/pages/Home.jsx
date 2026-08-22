@@ -3,7 +3,7 @@ import axios from 'axios'
 import Categories from '../components/Home/Categories'
 import Sort from '../components/Home/Sort'
 import Filter from '../components/Home/Filter'
-import ProductCard, { ProductCardSkeleton } from '../components/Home/ProductCard'
+import ProductList from '../components/Home/ProductList'
 import '../styles/Home.css'
 
 function Home() {
@@ -13,7 +13,6 @@ function Home() {
 	const [products, setProducts] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 	const [error, setError] = useState(false)
-	const shouldShowSkeletons = isLoading || error || products.length === 0
 
 	useEffect(() => {
 		let isCancelled = false
@@ -73,25 +72,7 @@ function Home() {
 
 			<div className="home__body">
 				<Filter onApply={setFilters} />
-
-				<div className="home__products">
-					{shouldShowSkeletons &&
-						Array.from({ length: 6 }).map((item, index) => <ProductCardSkeleton key={index} />)}
-
-
-					{!isLoading &&
-						!error &&
-						products.length > 0 &&
-						products.map((product) => (
-							<ProductCard
-								key={product.id}
-								name={product.name}
-								description={product.description}
-								price={product.price}
-								imageUrl={product.imageUrl}
-							/>
-						))}
-				</div>
+				<ProductList products={products} isLoading={isLoading} error={error} />
 			</div>
 		</div>
 	)

@@ -2,15 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { setAuthenticated } from '../../redux/Auth/authSlice'
+import AuthModalCloseButton from './AuthModalCloseButton'
+import CodeStep from './CodeStep'
+import PhoneStep from './PhoneStep'
 import './AuthModal.css'
-
-function CloseIcon() {
-	return (
-		<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-			<path d="M2 2L14 14M14 2L2 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-		</svg>
-	)
-}
 
 function formatPhone(value) {
 	const digits = value.replace(/\D/g, '').slice(0, 11)
@@ -106,63 +101,27 @@ function AuthModal({ onClose }) {
 			<div className="auth-modal__overlay" onClick={onClose} />
 
 			<div className="auth-modal__window">
-				<button className="auth-modal__close" onClick={onClose}>
-					<CloseIcon />
-				</button>
+				<AuthModalCloseButton onClose={onClose} />
 
 				{step === 'phone' ? (
-					<form className="auth-modal__form" onSubmit={handleSubmitPhone}>
-						<h2 className="auth-modal__title">Вход в аккаунт</h2>
-						<p className="auth-modal__subtitle">
-							Введите номер телефона, чтобы войти или зарегистрироваться
-						</p>
-
-						<input
-							className="auth-modal__input"
-							type="tel"
-							inputMode="numeric"
-							value={phone}
-							onChange={handlePhoneChange}
-							placeholder="+7 (921) XXX-XX-XX"
-							autoFocus
-						/>
-
-						<button className="auth-modal__submit" type="submit" disabled={!isPhoneComplete || isLoading}>
-							Получить код в SMS
-						</button>
-					</form>
+					<PhoneStep
+						phone={phone}
+						isLoading={isLoading}
+						isPhoneComplete={isPhoneComplete}
+						onPhoneChange={handlePhoneChange}
+						onSubmit={handleSubmitPhone}
+					/>
 				) : (
-					<div className="auth-modal__form">
-						<div className="auth-modal__heading">
-							<h2 className="auth-modal__title">Введите код</h2>
-							<span className="auth-modal__decor">🤙</span>
-						</div>
-
-						<p className="auth-modal__subtitle">
-							SMS-код был отправлен на номер телефона {phone}
-						</p>
-
-						<div className="auth-modal__code">
-							{code.map((digit, index) => (
-								<input
-									key={index}
-									ref={(element) => (codeRefs.current[index] = element)}
-									className="auth-modal__code-input"
-									type="text"
-									inputMode="numeric"
-									maxLength={1}
-									value={digit}
-									onChange={(event) => handleCodeChange(index, event.target.value)}
-									onKeyDown={(event) => handleCodeKeyDown(index, event)}
-									autoFocus={index === 0}
-								/>
-							))}
-						</div>
-
-						<button className="auth-modal__resend" type="button" onClick={handleResend} disabled={timer > 0 || isLoading}>
-							{timer > 0 ? `Запросить код — через ${timer} сек.` : 'Отправить код повторно'}
-						</button>
-					</div>
+					<CodeStep
+						phone={phone}
+						code={code}
+						codeRefs={codeRefs}
+						timer={timer}
+						isLoading={isLoading}
+						onCodeChange={handleCodeChange}
+						onCodeKeyDown={handleCodeKeyDown}
+						onResend={handleResend}
+					/>
 				)}
 			</div>
 		</div>

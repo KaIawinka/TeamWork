@@ -1,16 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
+import CategoryButton from './CategoryButton'
+import CategoryDropdown from './CategoryDropdown'
+import ChevronIcon from './ChevronIcon'
 import '../../styles/Categories.css'
 
 const VISIBLE_CATEGORIES = ['Все', 'Мясные', 'Острые', 'Сладкие', 'Вегетарианские', 'С курицей']
 const HIDDEN_CATEGORIES = ['Сырные', 'Постные', 'Гриль']
-
-function ChevronIcon() {
-	return (
-		<svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-			<path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-		</svg>
-	)
-}
 
 function Categories({ active, onSelect }) {
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
@@ -38,37 +33,19 @@ function Categories({ active, onSelect }) {
 		<ul className="categories">
 			{VISIBLE_CATEGORIES.map((category) => (
 				<li key={category}>
-					<button
-						className={active === category ? 'categories__item categories__item--active' : 'categories__item'}
-						onClick={() => handleSelect(category)}
-					>
+					<CategoryButton active={active === category} onClick={() => handleSelect(category)}>
 						{category}
-					</button>
+					</CategoryButton>
 				</li>
 			))}
 
 			<li className="categories__more" ref={moreRef}>
-				<button
-					className={isActiveHidden ? 'categories__item categories__item--active' : 'categories__item'}
-					onClick={() => setIsMoreOpen((state) => !state)}
-				>
+				<CategoryButton active={isActiveHidden} onClick={() => setIsMoreOpen((state) => !state)}>
 					{isActiveHidden ? active : 'Ещё'}
 					<ChevronIcon />
-				</button>
+				</CategoryButton>
 
-				{isMoreOpen && (
-					<ul className="categories__dropdown">
-						{HIDDEN_CATEGORIES.map((category) => (
-							<li
-								key={category}
-								className="categories__dropdown-item"
-								onClick={() => handleSelect(category)}
-							>
-								{category}
-							</li>
-						))}
-					</ul>
-				)}
+				{isMoreOpen && <CategoryDropdown categories={HIDDEN_CATEGORIES} onSelect={handleSelect} />}
 			</li>
 		</ul>
 	)

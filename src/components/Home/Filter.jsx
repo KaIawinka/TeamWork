@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import FilterApplyButton from './FilterApplyButton'
+import FilterCheckbox from './FilterCheckbox'
+import IngredientsFilter from './IngredientsFilter'
+import PriceRange from './PriceRange'
 import '../../styles/Filter.css'
 
 const INGREDIENTS = [
@@ -14,14 +18,6 @@ const INGREDIENTS = [
 ]
 
 const VISIBLE_COUNT = 6
-
-function CheckIcon() {
-	return (
-		<svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-			<path d="M1 4L4 7L9 1" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-		</svg>
-	)
-}
 
 function Filter({ onApply }) {
 	const [canAssemble, setCanAssemble] = useState(false)
@@ -53,66 +49,32 @@ function Filter({ onApply }) {
 		<div className="filter">
 			<h2 className="filter__title">Фильтрация</h2>
 
-			<label className="filter__checkbox">
-				<input type="checkbox" checked={canAssemble} onChange={(event) => setCanAssemble(event.target.checked)} />
-				<span className="filter__checkbox-box">{canAssemble && <CheckIcon />}</span>
+			<FilterCheckbox checked={canAssemble} onChange={(event) => setCanAssemble(event.target.checked)}>
 				Можно собирать
-			</label>
+			</FilterCheckbox>
 
-			<label className="filter__checkbox">
-				<input type="checkbox" checked={isNew} onChange={(event) => setIsNew(event.target.checked)} />
-				<span className="filter__checkbox-box">{isNew && <CheckIcon />}</span>
+			<FilterCheckbox checked={isNew} onChange={(event) => setIsNew(event.target.checked)}>
 				Новинки
-			</label>
+			</FilterCheckbox>
 
-			<div className="filter__section">
-				<h3 className="filter__subtitle">Цена от и до:</h3>
-				<div className="filter__price">
-					<div className="filter__price-input">
-						<input
-							type="number"
-							value={priceFrom}
-							onChange={(event) => setPriceFrom(event.target.value)}
-						/>
-						<span>₽</span>
-					</div>
-					<div className="filter__price-input">
-						<input
-							type="number"
-							value={priceTo}
-							onChange={(event) => setPriceTo(event.target.value)}
-						/>
-						<span>₽</span>
-					</div>
-				</div>
-			</div>
+			<PriceRange
+				priceFrom={priceFrom}
+				priceTo={priceTo}
+				onPriceFromChange={(event) => setPriceFrom(event.target.value)}
+				onPriceToChange={(event) => setPriceTo(event.target.value)}
+			/>
 
-			<div className="filter__section">
-				<h3 className="filter__subtitle">Ингредиенты:</h3>
-				{ingredientsToShow.map((ingredient) => (
-					<label className="filter__checkbox" key={ingredient.id}>
-						<input
-							type="checkbox"
-							checked={selectedIngredients.includes(ingredient.id)}
-							onChange={() => toggleIngredient(ingredient.id)}
-						/>
-						<span className="filter__checkbox-box">
-							{selectedIngredients.includes(ingredient.id) && <CheckIcon />}
-						</span>
-						{ingredient.name}
-					</label>
-				))}
+			<IngredientsFilter
+				ingredients={INGREDIENTS}
+				ingredientsToShow={ingredientsToShow}
+				selectedIngredients={selectedIngredients}
+				showAllIngredients={showAllIngredients}
+				visibleCount={VISIBLE_COUNT}
+				onToggleIngredient={toggleIngredient}
+				onShowAll={() => setShowAllIngredients(true)}
+			/>
 
-				{!showAllIngredients && INGREDIENTS.length > VISIBLE_COUNT && (
-					<button className="filter__show-all" onClick={() => setShowAllIngredients(true)}>
-						+ Показать всё
-					</button>
-				)}
-			</div>
-
-			<button className="filter__apply" onClick={handleApply}>
-				Применить
-			</button>
+			<FilterApplyButton onClick={handleApply} />
 		</div>
 	)
 }
