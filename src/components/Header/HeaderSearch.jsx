@@ -19,9 +19,9 @@ function highlightMatch(name, query) {
 	)
 }
 
-function SearchResult({ item, query }) {
+function SearchResult({ item, query, onSelect }) {
 	return (
-		<li className="header__search-item">
+		<li className="header__search-item" onClick={() => onSelect(item.name)}>
 			<img className="header__search-item-image" src={item.imageUrl} alt={item.name} />
 			<span className="header__search-item-name">{highlightMatch(item.name, query)}</span>
 			<span className="header__search-item-price">{item.price}₽</span>
@@ -29,22 +29,37 @@ function SearchResult({ item, query }) {
 	)
 }
 
-function SearchResults({ results, query }) {
+function SearchResults({ results, query, isLoading, onSelect }) {
 	return (
 		<ul className="header__search-dropdown">
-			{results.map((item) => (
-				<SearchResult key={item.id} item={item} query={query} />
+			{isLoading && <li className="header__search-item">Поиск...</li>}
+			{!isLoading && results.length === 0 && <li className="header__search-item">Ничего не найдено</li>}
+			{!isLoading && results.map((item) => (
+				<SearchResult key={item.id} item={item} query={query} onSelect={onSelect} />
 			))}
 		</ul>
 	)
 }
 
-function HeaderSearch() {
+function HeaderSearch({ onSearchApply }) {
 	const [query, setQuery] = useState('')
 	const [results, setResults] = useState([])
 	const [isSearchOpen, setIsSearchOpen] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const searchRef = useRef(null)
 	const debounceRef = useRef(null)
+	const requestIdRef = useRef(0)
+
+	function applySearch(value) {
+		const normalizedValue = value.trim()
+
+		clearTimeout(debounceRef.current)
+		requestIdRef.current += 1
+		onSearchApply(normalizedValue)
+		setIsSearchOpen(false)
+		setResults([])
+		setIsLoading(false)
+	}
 
 	useEffect(() => {
 		function handleClickOutside(event) {
@@ -57,6 +72,7 @@ function HeaderSearch() {
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside)
 			clearTimeout(debounceRef.current)
+			requestIdRef.current += 1
 		}
 	}, [])
 
@@ -64,27 +80,43 @@ function HeaderSearch() {
 		const value = event.target.value
 		setQuery(value)
 		clearTimeout(debounceRef.current)
+		const requestId = ++requestIdRef.current
 
 		if (!value.trim()) {
 			setResults([])
 			setIsSearchOpen(false)
+			setIsLoading(false)
 			return
 		}
 
+		setIsLoading(true)
+		setIsSearchOpen(true)
 		debounceRef.current = setTimeout(async () => {
 			try {
 				const nextResults = await getPizzas({ search: value })
+				if (requestId !== requestIdRef.current) return
 				setResults(nextResults)
-				setIsSearchOpen(nextResults.length > 0)
 			} catch {
+				if (requestId !== requestIdRef.current) return
 				setResults([])
-				setIsSearchOpen(false)
+			} finally {
+				if (requestId === requestIdRef.current) setIsLoading(false)
 			}
 		}, 300)
 	}
 
+	function handleSubmit(event) {
+		event.preventDefault()
+		applySearch(query)
+	}
+
+	function handleResultSelect(value) {
+		setQuery(value)
+		applySearch(value)
+	}
+
 	return (
-		<div className="header__search" ref={searchRef}>
+		<form className="header__search" ref={searchRef} onSubmit={handleSubmit}>
 			<span className="header__search-icon">
 				<SearchIcon />
 			</span>
@@ -94,11 +126,11 @@ function HeaderSearch() {
 				placeholder="Поиск пиццы..."
 				value={query}
 				onChange={handleSearchChange}
-				onFocus={() => query && results.length > 0 && setIsSearchOpen(true)}
+				onFocus={() => query.trim() && setIsSearchOpen(true)}
 			/>
 
-			{isSearchOpen && results.length > 0 && <SearchResults results={results} query={query} />}
-		</div>
+			{isSearchOpen && query.trim() && <SearchResults results={results} query={query} isLoading={isLoading} onSelect={handleResultSelect} />}
+		</form>
 	)
 }
 

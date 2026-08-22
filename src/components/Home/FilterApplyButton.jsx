@@ -1,6 +1,6 @@
 function FilterApplyButton({ onClick }) {
 	return (
-		<button className="filter__apply" onClick={onClick}>
+		<button type="submit" className="filter__apply" onClick={onClick}>
 			Применить
 		</button>
 	)

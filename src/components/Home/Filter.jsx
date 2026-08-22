@@ -43,7 +43,7 @@ function Filter({ onApply }) {
 	}
 
 	return (
-		<div className="filter">
+		<form className="filter" onSubmit={(event) => { event.preventDefault(); handleApply() }}>
 			<h2 className="filter__title">Фильтрация</h2>
 
 			<FilterCheckbox checked={canAssemble} onChange={(event) => setCanAssemble(event.target.checked)}>
@@ -71,8 +71,8 @@ function Filter({ onApply }) {
 				onShowAll={() => setShowAllIngredients(true)}
 			/>
 
-			<FilterApplyButton onClick={handleApply} />
-		</div>
+			<FilterApplyButton />
+		</form>
 	)
 }
 

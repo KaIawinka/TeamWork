@@ -6,11 +6,12 @@ function ProductSkeletons() {
 }
 
 function ProductList({ products, isLoading, error }) {
-	const shouldShowSkeletons = isLoading || error || products.length === 0
+	const shouldShowSkeletons = isLoading
 
 	return (
 		<div className="home__products">
 			{shouldShowSkeletons && <ProductSkeletons />}
+			{!isLoading && !error && products.length === 0 && <p className="home__message">Товар не найден</p>}
 
 			{!isLoading &&
 				!error &&

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import Categories from '../components/Home/Categories'
 import Sort from '../components/Home/Sort'
 import Filter from '../components/Home/Filter'
@@ -7,6 +8,7 @@ import { getPizzas } from '../api/pizzas'
 import '../styles/Home.css'
 
 function Home() {
+	const { searchQuery } = useOutletContext()
 	const [category, setCategory] = useState('Все')
 	const [sortBy, setSortBy] = useState('rating')
 	const [filters, setFilters] = useState(null)
@@ -25,6 +27,7 @@ function Home() {
 				const nextProducts = await getPizzas({
 					category: category === 'Все' ? undefined : category,
 					sortBy,
+					search: searchQuery,
 					...filters,
 				})
 
@@ -48,7 +51,7 @@ function Home() {
 		return () => {
 			isCancelled = true
 		}
-	}, [category, sortBy, filters])
+	}, [category, sortBy, filters, searchQuery])
 
 	return (
 		<div className="home">
