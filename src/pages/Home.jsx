@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import Categories from '../components/Home/Categories'
 import Sort from '../components/Home/Sort'
 import Filter from '../components/Home/Filter'
 import ProductList from '../components/Home/ProductList'
+import { getPizzas } from '../api/pizzas'
 import '../styles/Home.css'
 
 function Home() {
@@ -22,25 +22,14 @@ function Home() {
 			setError(false)
 
 			try {
-				const response = await axios.get('/api/pizzas', {
-					params: {
-						category: category === 'Все' ? undefined : category,
-						sortBy,
-						canAssemble: filters?.canAssemble || undefined,
-						isNew: filters?.isNew || undefined,
-						priceFrom: filters?.priceFrom || undefined,
-						priceTo: filters?.priceTo || undefined,
-						ingredients: filters?.ingredients?.length ? filters.ingredients.join(',') : undefined,
-					},
+				const nextProducts = await getPizzas({
+					category: category === 'Все' ? undefined : category,
+					sortBy,
+					...filters,
 				})
 
 				if (!isCancelled) {
-					if (Array.isArray(response.data)) {
-						setProducts(response.data)
-					} else {
-						setError(true)
-						setProducts([])
-					}
+					setProducts(nextProducts)
 				}
 			} catch {
 				if (!isCancelled) {

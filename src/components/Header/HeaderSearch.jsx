@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import axios from 'axios'
 import { SearchIcon } from './HeaderIcons'
+import { getPizzas } from '../../api/pizzas'
 
 function highlightMatch(name, query) {
 	const index = name.toLowerCase().indexOf(query.toLowerCase())
@@ -73,8 +73,7 @@ function HeaderSearch() {
 
 		debounceRef.current = setTimeout(async () => {
 			try {
-				const response = await axios.get('/api/pizzas', { params: { search: value } })
-				const nextResults = Array.isArray(response.data) ? response.data : []
+				const nextResults = await getPizzas({ search: value })
 				setResults(nextResults)
 				setIsSearchOpen(nextResults.length > 0)
 			} catch {
