@@ -15,7 +15,7 @@ function CartItem({ item, onRemove }) {
 					{item.size} см, {doughName} тесто
 				</p>
 				<strong>
-					{item.price} ₸ x {item.quantity}
+					{item.price} ₽ x {item.quantity}
 				</strong>
 			</div>
 			<button type="button" onClick={onRemove}>
@@ -67,7 +67,7 @@ function Cart() {
 						<h2>Ваш заказ</h2>
 						<div>
 							<span>Товары</span>
-							<strong>{total} ₸</strong>
+							<strong>{total} ₽</strong>
 						</div>
 						<div>
 							<span>Доставка</span>
@@ -76,7 +76,7 @@ function Cart() {
 						<hr />
 						<div className="cart-summary__total">
 							<span>Итого</span>
-							<strong>{total} ₸</strong>
+							<strong>{total} ₽</strong>
 						</div>
 						<button className="cart-page__button" type="button">
 							Оформить заказ
