@@ -11,31 +11,29 @@ const OPTIONS = [
 
 function Sort({ value, onChange }) {
 	const [isOpen, setIsOpen] = useState(false)
-	const ref = useRef(null)
+	const sortRef = useRef(null)
+	const current = OPTIONS.find((option) => option.value === value) || OPTIONS[0]
 
 	useEffect(() => {
-		function handleClickOutside(event) {
-			if (ref.current && !ref.current.contains(event.target)) {
+		function closeDropdown(event) {
+			if (sortRef.current && !sortRef.current.contains(event.target)) {
 				setIsOpen(false)
 			}
 		}
 
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => document.removeEventListener('mousedown', handleClickOutside)
+		document.addEventListener('mousedown', closeDropdown)
+		return () => document.removeEventListener('mousedown', closeDropdown)
 	}, [])
 
-	const current = OPTIONS.find((option) => option.value === value) ?? OPTIONS[0]
-
-	function handleSelect(option) {
+	function chooseSort(option) {
 		onChange(option.value)
 		setIsOpen(false)
 	}
 
 	return (
-		<div className="sort" ref={ref}>
-			<SortToggle current={current} onClick={() => setIsOpen((state) => !state)} />
-
-			{isOpen && <SortDropdown options={OPTIONS} current={current} onSelect={handleSelect} />}
+		<div className="sort" ref={sortRef}>
+			<SortToggle current={current} onClick={() => setIsOpen(!isOpen)} />
+			{isOpen && <SortDropdown options={OPTIONS} current={current} onSelect={chooseSort} />}
 		</div>
 	)
 }

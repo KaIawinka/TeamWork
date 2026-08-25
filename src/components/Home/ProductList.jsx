@@ -2,32 +2,22 @@ import ProductCard from './ProductCard'
 import ProductCardSkeleton from './ProductCardSkeleton'
 
 function ProductSkeletons() {
-	return Array.from({ length: 6 }).map((item, index) => <ProductCardSkeleton key={index} />)
+	return Array.from({ length: 6 }).map((_, index) => <ProductCardSkeleton key={index} />)
 }
 
 function ProductList({ products, isLoading, error, onOpen, hasActiveFilters }) {
-	const shouldShowSkeletons = isLoading
-
 	return (
 		<div className="home__products">
-			{shouldShowSkeletons && <ProductSkeletons />}
+			{isLoading && <ProductSkeletons />}
 			{!isLoading && error && <p className="home__message">Не удалось загрузить товары</p>}
 			{!isLoading && !error && products.length === 0 && (
 				<p className="home__message">
-					{hasActiveFilters ? 'Товар не найден' : 'Каталог пока пуст. Добавьте товары через панель управления.'}
+					{hasActiveFilters ? 'Товар не найден' : 'Каталог пока пуст'}
 				</p>
 			)}
-
-			{!isLoading &&
-				!error &&
-				products.length > 0 &&
-				products.map((product) => (
-					<ProductCard
-						key={product.id}
-						product={product}
-						onOpen={onOpen}
-					/>
-				))}
+			{!isLoading && !error && products.map((product) => (
+				<ProductCard key={product.id} product={product} onOpen={onOpen} />
+			))}
 		</div>
 	)
 }

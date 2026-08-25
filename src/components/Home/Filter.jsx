@@ -9,12 +9,10 @@ const INGREDIENTS = [
 	{ id: 1, name: 'Сырный соус' },
 	{ id: 2, name: 'Моцарелла' },
 	{ id: 3, name: 'Чеснок' },
-	{ id: 4, name: 'Солёные огурчики' },
+	{ id: 4, name: 'Соленые огурчики' },
 	{ id: 5, name: 'Красный лук' },
 	{ id: 6, name: 'Томаты' },
 ]
-
-const VISIBLE_COUNT = 6
 
 function Filter({ onApply }) {
 	const [canAssemble, setCanAssemble] = useState(false)
@@ -22,32 +20,32 @@ function Filter({ onApply }) {
 	const [priceFrom, setPriceFrom] = useState('')
 	const [priceTo, setPriceTo] = useState('')
 	const [selectedIngredients, setSelectedIngredients] = useState([])
-	const [showAllIngredients, setShowAllIngredients] = useState(false)
-
-	const ingredientsToShow = showAllIngredients ? INGREDIENTS : INGREDIENTS.slice(0, VISIBLE_COUNT)
 
 	function toggleIngredient(id) {
-		setSelectedIngredients((current) =>
-			current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-		)
+		if (selectedIngredients.includes(id)) {
+			setSelectedIngredients(selectedIngredients.filter((item) => item !== id))
+		} else {
+			setSelectedIngredients([...selectedIngredients, id])
+		}
 	}
 
-	function handleApply() {
+	function handleSubmit(event) {
+		event.preventDefault()
 		onApply({
 			canAssemble,
 			isNew,
-			priceFrom: priceFrom === '' ? undefined : Number(priceFrom),
-			priceTo: priceTo === '' ? undefined : Number(priceTo),
+			priceFrom: priceFrom ? Number(priceFrom) : undefined,
+			priceTo: priceTo ? Number(priceTo) : undefined,
 			ingredients: selectedIngredients,
 		})
 	}
 
 	return (
-		<form className="filter" onSubmit={(event) => { event.preventDefault(); handleApply() }}>
+		<form className="filter" onSubmit={handleSubmit}>
 			<h2 className="filter__title">Фильтрация</h2>
 
 			<FilterCheckbox checked={canAssemble} onChange={(event) => setCanAssemble(event.target.checked)}>
-				Можно собирать
+				Можно собрать
 			</FilterCheckbox>
 
 			<FilterCheckbox checked={isNew} onChange={(event) => setIsNew(event.target.checked)}>
@@ -63,12 +61,12 @@ function Filter({ onApply }) {
 
 			<IngredientsFilter
 				ingredients={INGREDIENTS}
-				ingredientsToShow={ingredientsToShow}
+				ingredientsToShow={INGREDIENTS}
 				selectedIngredients={selectedIngredients}
-				showAllIngredients={showAllIngredients}
-				visibleCount={VISIBLE_COUNT}
+				showAllIngredients
+				visibleCount={INGREDIENTS.length}
 				onToggleIngredient={toggleIngredient}
-				onShowAll={() => setShowAllIngredients(true)}
+				onShowAll={() => {}}
 			/>
 
 			<FilterApplyButton />

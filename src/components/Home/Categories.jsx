@@ -10,42 +10,41 @@ const HIDDEN_CATEGORIES = ['Сырные', 'Постные', 'Гриль']
 function Categories({ active, onSelect }) {
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const moreRef = useRef(null)
+	const isActiveHidden = HIDDEN_CATEGORIES.includes(active)
 
 	useEffect(() => {
-		function handleClickOutside(event) {
+		function closeDropdown(event) {
 			if (moreRef.current && !moreRef.current.contains(event.target)) {
 				setIsMoreOpen(false)
 			}
 		}
 
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => document.removeEventListener('mousedown', handleClickOutside)
+		document.addEventListener('mousedown', closeDropdown)
+		return () => document.removeEventListener('mousedown', closeDropdown)
 	}, [])
 
-	function handleSelect(category) {
+	function chooseCategory(category) {
 		onSelect(category)
 		setIsMoreOpen(false)
 	}
-
-	const isActiveHidden = HIDDEN_CATEGORIES.includes(active)
 
 	return (
 		<ul className="categories">
 			{VISIBLE_CATEGORIES.map((category) => (
 				<li key={category}>
-					<CategoryButton active={active === category} onClick={() => handleSelect(category)}>
+					<CategoryButton active={active === category} onClick={() => chooseCategory(category)}>
 						{category}
 					</CategoryButton>
 				</li>
 			))}
 
 			<li className="categories__more" ref={moreRef}>
-				<CategoryButton active={isActiveHidden} onClick={() => setIsMoreOpen((state) => !state)}>
+				<CategoryButton active={isActiveHidden} onClick={() => setIsMoreOpen(!isMoreOpen)}>
 					{isActiveHidden ? active : 'Ещё'}
 					<ChevronIcon />
 				</CategoryButton>
 
-				{isMoreOpen && <CategoryDropdown categories={HIDDEN_CATEGORIES} onSelect={handleSelect} />}
+				{isMoreOpen && <CategoryDropdown categories={HIDDEN_CATEGORIES} onSelect={chooseCategory} />}
 			</li>
 		</ul>
 	)

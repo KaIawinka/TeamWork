@@ -2,7 +2,7 @@ import FilterCheckbox from './FilterCheckbox'
 
 function ShowAllButton({ onClick }) {
 	return (
-		<button className="filter__show-all" onClick={onClick}>
+		<button className="filter__show-all" type="button" onClick={onClick}>
 			+ Показать всё
 		</button>
 	)

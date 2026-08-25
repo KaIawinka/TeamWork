@@ -1,10 +1,8 @@
-function PhoneStep({ phone, isLoading, isPhoneComplete, onPhoneChange, onSubmit }) {
+function PhoneStep({ phone, isPhoneComplete, onPhoneChange, onSubmit }) {
 	return (
 		<form className="auth-modal__form" onSubmit={onSubmit}>
 			<h2 className="auth-modal__title">Вход в аккаунт</h2>
-			<p className="auth-modal__subtitle">
-				Введите номер телефона, чтобы войти или зарегистрироваться
-			</p>
+			<p className="auth-modal__subtitle">Введите номер телефона, чтобы войти</p>
 
 			<input
 				className="auth-modal__input"
@@ -16,8 +14,8 @@ function PhoneStep({ phone, isLoading, isPhoneComplete, onPhoneChange, onSubmit 
 				autoFocus
 			/>
 
-			<button className="auth-modal__submit" type="submit" disabled={!isPhoneComplete || isLoading}>
-				Получить код в SMS
+			<button className="auth-modal__submit" type="submit" disabled={!isPhoneComplete}>
+				Войти
 			</button>
 		</form>
 	)

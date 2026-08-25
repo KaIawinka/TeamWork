@@ -1,4 +1,6 @@
-import api, { API_BASE_URL } from './client'
+import axios from 'axios'
+
+const API_BASE_URL = 'https://pizza-api-pj4j.onrender.com'
 
 const CATEGORY_FIELDS = {
 	Мясные: 'isMeat',
@@ -21,40 +23,31 @@ const INGREDIENT_FIELDS = {
 }
 
 function normalizePizza(pizza) {
-	const imageUrl = pizza.imageUrl ?? pizza.image
+	const imageUrl = pizza.imageUrl || pizza.image || ''
 
 	return {
 		...pizza,
-		name: pizza.name ?? pizza.title,
-		imageUrl: imageUrl?.startsWith('http') ? imageUrl : `${API_BASE_URL}${imageUrl ?? ''}`,
+		name: pizza.name || pizza.title,
+		imageUrl: imageUrl.startsWith('http') ? imageUrl : `${API_BASE_URL}${imageUrl}`,
 	}
 }
 
 function matchesFilters(pizza, options) {
 	const categoryField = CATEGORY_FIELDS[options.category]
-	const ingredients = options.ingredients ?? []
+	const ingredients = options.ingredients || []
 
-	return (
-		(!categoryField || pizza[categoryField]) &&
-		(!options.canAssemble || pizza.canCustomise) &&
-		(!options.isNew || pizza.isNew) &&
-		(options.priceFrom === undefined || Number.isNaN(options.priceFrom) || pizza.price >= options.priceFrom) &&
-		(options.priceTo === undefined || Number.isNaN(options.priceTo) || pizza.price <= options.priceTo) &&
-		ingredients.every((id) => pizza[INGREDIENT_FIELDS[id]])
-	)
+	if (categoryField && !pizza[categoryField]) return false
+	if (options.canAssemble && !pizza.canCustomise) return false
+	if (options.isNew && !pizza.isNew) return false
+	if (options.priceFrom !== undefined && pizza.price < options.priceFrom) return false
+	if (options.priceTo !== undefined && pizza.price > options.priceTo) return false
+
+	return ingredients.every((id) => pizza[INGREDIENT_FIELDS[id]])
 }
 
 export async function getPizzas(options = {}) {
-	let apiPizzas = []
-
-	try {
-		const response = await api.get('/api/v1/pizzas')
-		apiPizzas = Array.isArray(response.data) ? response.data.map(normalizePizza) : []
-	} catch (error) {
-		console.warn('Не удалось загрузить товары из API', error)
-	}
-
-	const pizzas = apiPizzas
+	const response = await axios.get(`${API_BASE_URL}/api/v1/pizzas`)
+	const pizzas = Array.isArray(response.data) ? response.data.map(normalizePizza) : []
 	const query = options.search?.trim().toLowerCase()
 
 	return pizzas
@@ -66,4 +59,3 @@ export async function getPizzas(options = {}) {
 			return 0
 		})
 }
-
