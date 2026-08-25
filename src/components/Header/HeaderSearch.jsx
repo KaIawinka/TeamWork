@@ -20,7 +20,7 @@ function SearchResult({ item, query, onSelect }) {
 		<li className="header__search-item" onClick={() => onSelect(item.name)}>
 			<img className="header__search-item-image" src={item.imageUrl} alt={item.name} />
 			<span className="header__search-item-name">{highlightMatch(item.name, query)}</span>
-			<span className="header__search-item-price">{item.price}₸</span>
+			<span className="header__search-item-price">{item.price} ₽</span>
 		</li>
 	)
 }

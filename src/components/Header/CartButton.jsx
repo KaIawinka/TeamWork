@@ -4,7 +4,7 @@ import { CartIcon } from './HeaderIcons'
 function FilledCart({ totalPrice, totalCount }) {
 	return (
 		<>
-			<span className="header__cart-price">{totalPrice} ₸</span>
+			<span className="header__cart-price">{totalPrice} ₽</span>
 			<span className="header__cart-divider" />
 			<CartIcon />
 			<span className="header__cart-count">{totalCount}</span>

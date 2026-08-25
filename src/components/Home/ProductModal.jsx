@@ -85,7 +85,7 @@ function ProductModal({ product, onClose }) {
 					</div>
 
 					<button className="product-modal__add" type="button" onClick={handleAdd}>
-						Добавить в корзину за {price} ₸
+						Добавить в корзину за {price} ₽
 					</button>
 				</div>
 			</div>

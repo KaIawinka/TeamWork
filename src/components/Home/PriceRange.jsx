@@ -2,7 +2,7 @@ function PriceInput({ value, onChange }) {
 	return (
 		<div className="filter__price-input">
 			<input type="number" value={value} onChange={onChange} />
-			<span>₸</span>
+			<span>₽</span>
 		</div>
 	)
 }
