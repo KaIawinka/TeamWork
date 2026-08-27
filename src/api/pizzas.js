@@ -32,6 +32,17 @@ function normalizePizza(pizza) {
 	}
 }
 
+function getRating(pizza) {
+	return Number(pizza.rating ?? pizza.rate ?? pizza.popularity ?? pizza.score ?? 0)
+}
+
+function compareByField(first, second, field) {
+	if (field === 'price') return first.price - second.price
+	if (field === 'name') return first.name.localeCompare(second.name, 'ru')
+	if (field === 'rating') return getRating(first) - getRating(second)
+	return 0
+}
+
 function matchesFilters(pizza, options) {
 	const categoryField = CATEGORY_FIELDS[options.category]
 	const ingredients = options.ingredients || []
@@ -49,13 +60,12 @@ export async function getPizzas(options = {}) {
 	const response = await axios.get(`${API_BASE_URL}/api/v1/pizzas`)
 	const pizzas = Array.isArray(response.data) ? response.data.map(normalizePizza) : []
 	const query = options.search?.trim().toLowerCase()
+	const sortOrder = options.sortOrder === 'desc' ? -1 : 1
 
 	return pizzas
 		.filter((pizza) => !query || pizza.name.toLowerCase().includes(query))
 		.filter((pizza) => matchesFilters(pizza, options))
 		.sort((first, second) => {
-			if (options.sortBy === 'price') return first.price - second.price
-			if (options.sortBy === 'name') return first.name.localeCompare(second.name, 'ru')
-			return 0
+			return compareByField(first, second, options.sortBy) * sortOrder
 		})
 }

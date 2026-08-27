@@ -23,6 +23,12 @@
 	font-weight: 700;
 }
 
+.sort__direction {
+	color: #fe5f00;
+	font-size: 14px;
+	line-height: 1;
+}
+
 .sort__dropdown {
 	position: absolute;
 	top: calc(100% + 8px);
@@ -37,9 +43,13 @@
 }
 
 .sort__item {
+	display: block;
+	width: 100%;
 	padding: 10px 12px;
 	border-radius: 8px;
+	background: transparent;
 	font-size: 14px;
+	text-align: left;
 	color: #1a1a1a;
 	cursor: pointer;
 }

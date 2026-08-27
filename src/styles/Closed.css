@@ -1,0 +1,129 @@
+.closed {
+	min-height: 520px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 42px 24px;
+}
+
+.closed--modal {
+	position: fixed;
+	inset: 0;
+	min-height: 0;
+	z-index: 140;
+}
+
+.closed__overlay {
+	position: absolute;
+	inset: 0;
+	background-color: rgba(20, 20, 20, 0.45);
+}
+
+.closed__window {
+	position: relative;
+	width: min(100%, 430px);
+	border-radius: 18px;
+	background: #ffffff;
+	padding: 34px;
+	text-align: center;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.closed__close {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 28px;
+	height: 28px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #b0b0b0;
+	cursor: pointer;
+}
+
+.closed__close:hover {
+	color: #1a1a1a;
+}
+
+.closed__icon {
+	width: 54px;
+	height: 54px;
+	margin: 0 auto 18px;
+	border-radius: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #fff1e9;
+	color: #fe5f00;
+	font-size: 30px;
+	font-weight: 800;
+}
+
+.closed h2 {
+	margin-bottom: 10px;
+	color: #1a1a1a;
+	font-size: 24px;
+	font-weight: 800;
+}
+
+.closed p {
+	margin: 0 auto 24px;
+	max-width: 340px;
+	color: #8f8f8f;
+	font-size: 14px;
+	line-height: 1.45;
+}
+
+.closed__actions {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.closed__button {
+	height: 42px;
+	padding: 0 18px;
+	border-radius: 12px;
+	border: 1px solid #ececec;
+	background-color: #ffffff;
+	color: #1a1a1a;
+	font-size: 13px;
+	font-weight: 700;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.closed__button:hover {
+	border-color: #fe5f00;
+	color: #fe5f00;
+}
+
+.closed__button--primary {
+	border-color: #fe5f00;
+	background-color: #fe5f00;
+	color: #ffffff;
+}
+
+.closed__button--primary:hover {
+	background-color: #e35400;
+	border-color: #e35400;
+	color: #ffffff;
+}
+
+@media (max-width: 520px) {
+	.closed {
+		padding: 28px 18px;
+	}
+
+	.closed__window {
+		padding: 30px 22px;
+	}
+
+	.closed__actions {
+		flex-direction: column;
+	}
+}

@@ -12,7 +12,7 @@ import '../styles/Home.css'
 function Home() {
 	const { searchQuery } = useOutletContext()
 	const [category, setCategory] = useState('Все')
-	const [sortBy, setSortBy] = useState('rating')
+	const [sort, setSort] = useState({ field: 'rating', order: 'desc' })
 	const [filters, setFilters] = useState({})
 	const [products, setProducts] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
@@ -43,7 +43,8 @@ function Home() {
 			try {
 				const data = await getPizzas({
 					category: category === 'Все' ? undefined : category,
-					sortBy,
+					sortBy: sort.field,
+					sortOrder: sort.order,
 					search: searchQuery,
 					...filters,
 				})
@@ -57,7 +58,7 @@ function Home() {
 		}
 
 		loadProducts()
-	}, [category, sortBy, filters, searchQuery])
+	}, [category, sort, filters, searchQuery])
 
 	function changeCategory(value) {
 		setCategory(value)
@@ -65,7 +66,10 @@ function Home() {
 	}
 
 	function changeSort(value) {
-		setSortBy(value)
+		setSort((current) => ({
+			field: value,
+			order: current.field === value && current.order === 'asc' ? 'desc' : 'asc',
+		}))
 		setCurrentPage(1)
 	}
 
@@ -80,7 +84,7 @@ function Home() {
 
 			<div className="home__controls">
 				<Categories active={category} onSelect={changeCategory} />
-				<Sort value={sortBy} onChange={changeSort} />
+				<Sort value={sort.field} order={sort.order} onChange={changeSort} />
 			</div>
 
 			<div className="home__body">

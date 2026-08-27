@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearCart, removeFromCart } from '../redux/Cart/cartSlice'
+import Closed from './Closed'
 import '../styles/Cart.css'
 
 function CartItem({ item, onRemove }) {
@@ -39,8 +40,11 @@ function EmptyCart() {
 
 function Cart() {
 	const dispatch = useDispatch()
+	const isLogin = useSelector((state) => state.auth.isLogin)
 	const items = useSelector((state) => state.cart.items)
 	const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+	if (!isLogin) return <Closed />
 
 	return (
 		<section className="cart-page">

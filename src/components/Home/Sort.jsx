@@ -9,7 +9,7 @@ const OPTIONS = [
 	{ value: 'name', label: 'алфавиту' },
 ]
 
-function Sort({ value, onChange }) {
+function Sort({ value, order, onChange }) {
 	const [isOpen, setIsOpen] = useState(false)
 	const sortRef = useRef(null)
 	const current = OPTIONS.find((option) => option.value === value) || OPTIONS[0]
@@ -32,7 +32,7 @@ function Sort({ value, onChange }) {
 
 	return (
 		<div className="sort" ref={sortRef}>
-			<SortToggle current={current} onClick={() => setIsOpen(!isOpen)} />
+			<SortToggle current={current} order={order} onClick={() => setIsOpen(!isOpen)} />
 			{isOpen && <SortDropdown options={OPTIONS} current={current} onSelect={chooseSort} />}
 		</div>
 	)

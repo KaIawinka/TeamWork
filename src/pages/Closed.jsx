@@ -1,31 +1,32 @@
-import "../styles/Closed.css";
-import { Link } from "react-router-dom";
-function Closed() {
-  return (
-    <div>
-      <div className="closed">
-        <div className="clo-text">
-          <h2>Доступ запрещён</h2>
-          <p>
-            Данную страницу могут просматривать только авторизованные
-            пользователи
-          </p>
-          <div className="clo-btn">
-            <Link to="/">
-              <button className="home">
-                <img src="/Group (2).svg" alt="" />
-                На главную
-              </button>
-            </Link>
-            <button className="refresh">Обновить</button>
-          </div>
-        </div>
-        <div className="clo-img">
-          <img src="/101-unlock 1.svg" alt="" />
-        </div>
-      </div>
-    </div>
-  );
+import { Link } from 'react-router-dom'
+import '../styles/Closed.css'
+
+function Closed({ isModal = false, onClose }) {
+	return (
+		<div className={isModal ? 'closed closed--modal' : 'closed'}>
+			{isModal && <button className="closed__overlay" type="button" aria-label="Закрыть" onClick={onClose} />}
+			<div className="closed__window">
+				{isModal && (
+					<button className="closed__close" type="button" aria-label="Закрыть" onClick={onClose}>
+						x
+					</button>
+				)}
+				<div className="closed__icon" aria-hidden="true">
+					!
+				</div>
+				<h2>Доступ запрещён</h2>
+				<p>Зарегистрируйтесь или войдите в аккаунт, чтобы добавлять товары и открывать корзину.</p>
+				<div className="closed__actions">
+					<Link to="/" className="closed__button closed__button--primary" onClick={onClose}>
+						На главную
+					</Link>
+					<button className="closed__button" type="button" onClick={() => window.location.reload()}>
+						Обновить
+					</button>
+				</div>
+			</div>
+		</div>
+	)
 }
 
-export default Closed;
+export default Closed

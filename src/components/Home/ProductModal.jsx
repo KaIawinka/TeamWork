@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../redux/Cart/cartSlice'
+import Closed from '../../pages/Closed'
 import './ProductModal.css'
 
 const SIZES = [25, 30, 35]
@@ -13,12 +14,19 @@ function getPrice(price, size) {
 
 function ProductModal({ product, onClose }) {
 	const dispatch = useDispatch()
+	const isLogin = useSelector((state) => state.auth.isLogin)
 	const [size, setSize] = useState(30)
 	const [dough, setDough] = useState(product.doughType === 'thin' ? 'thin' : 'traditional')
+	const [isClosedOpen, setIsClosedOpen] = useState(false)
 	const price = getPrice(product.price, size)
 	const doughName = dough === 'thin' ? 'тонкое' : 'традиционное'
 
 	function handleAdd() {
+		if (!isLogin) {
+			setIsClosedOpen(true)
+			return
+		}
+
 		dispatch(addToCart({
 			...product,
 			id: `${product.id}-${size}-${dough}`,
@@ -89,6 +97,7 @@ function ProductModal({ product, onClose }) {
 					</button>
 				</div>
 			</div>
+			{isClosedOpen && <Closed isModal onClose={() => setIsClosedOpen(false)} />}
 		</div>
 	)
 }

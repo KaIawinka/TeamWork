@@ -61,9 +61,13 @@
 }
 
 .categories__dropdown-item {
+	display: block;
+	width: 100%;
 	padding: 10px 12px;
 	border-radius: 8px;
+	background: transparent;
 	font-size: 14px;
+	text-align: left;
 	color: #1a1a1a;
 	cursor: pointer;
 }

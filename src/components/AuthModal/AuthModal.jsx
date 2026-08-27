@@ -28,6 +28,7 @@ function AuthModal({ onClose }) {
 
 	function handleSubmit(event) {
 		event.preventDefault()
+		if (!isPhoneComplete) return
 		dispatch(login(phone))
 		onClose()
 	}
